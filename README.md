@@ -21,8 +21,7 @@ creating a communication via MQTT between the two, as well as to succeed
 in controlling a LED strip thanks to the acoustic variations perceived
 by the sound sensor.
 
-![](./media/image1.png){width="6.495138888888889in"
-height="2.9430555555555555in"}
+![](./media/image1.png)
 
 **Feasibility Study**
 
@@ -73,15 +72,12 @@ for the example, I have a consumption of 60\*30 = 1800mA. The NodeMCU
 with Wifi, and the complexity of the program consumes between 40 and
 70mA on average, and the sound sensor about 10mA.
 
-![](./media/image2.png){width="6.495138888888889in"
-height="2.484722222222222in"}The remaining amperage allows me to add LED
+![](./media/image2.png)The remaining amperage allows me to add LED
 strips to the chain, if necessary, until I have about 80 LEDs. With the
 WS2812b strip I used I did not need any additional resistor to connect
 with the NodeMCU since the strip include resistor already.
 
-![](./media/image3.jpeg){width="4.159027777777778in"
-height="3.152083333333333in"}![](./media/image4.jpeg){width="2.7944444444444443in"
-height="1.9444444444444444in"}
+![](./media/image3.jpeg)![](./media/image4.jpeg)
 
 Sound Sensor KY-037
 
@@ -93,10 +89,7 @@ I designed everything from scratch and used the **mqtt_client** library
 (https://pub.dev/packages/flutter_colorpicker) to integrate a color
 picker interface.
 
-![](./media/image5.png){width="2.25625in"
-height="4.636805555555555in"}![](./media/image6.png){width="2.2743055555555554in"
-height="4.673611111111111in"}![](./media/image7.png){width="2.2909722222222224in"
-height="4.708333333333333in"}You will see how the application looks like
+![](./media/image5.png)![](./media/image6.png)![](./media/image7.png)You will see how the application looks like
 and how it works in details on the YouTube video:
 
 **Communication Logic**
@@ -123,11 +116,9 @@ later).
 To do so, I used the **Serial Plotter** feature of Arduino IDE, to trace
 a graph from the 8 different Serial sent by the NodeMCU as follows:
 
-![](./media/image8.png){width="3.3268121172353458in"
-height="1.1373829833770779in"}
+![](./media/image8.png)
 
-![](./media/image9.png){width="5.546875546806649in"
-height="3.5515616797900265in"}
+![](./media/image9.png)
 
 On the above picture, you can see 8 different signals of different
 colors, recording a silence room. I calculated the average value of each
@@ -150,8 +141,7 @@ The program structure is too complex to explain in one single chart.
 
 **Libraries used:**
 
-![](./media/image10.png){width="3.142095363079615in"
-height="1.028902012248469in"}Threads
+![](./media/image10.png)Threads
 
 Wi-Fi Management
 
@@ -163,25 +153,22 @@ Fourier transform for the sound signal
 
 **Main variables**
 
-![](./media/image11.png){width="6.5in" height="3.2083333333333335in"}
+![](./media/image11.png)
 
 **Class LedController**
 
-![](./media/image12.png){width="6.5in" height="2.673611111111111in"}
+![](./media/image12.png)
 
-![](./media/image13.png){width="6.5in"
-height="0.25833333333333336in"}**Initialization of a LEDController for
+![](./media/image13.png)**Initialization of a LEDController for
 each led, stored in a static array.**
 
 **Function to turn Off the specific led (index)**
 
-![](./media/image14.png){width="3.272222222222222in"
-height="0.8375in"}Set the color to black color (0,0,0)
+![](./media/image14.png)Set the color to black color (0,0,0)
 
 **Preset functions to animate the leds**
 
-![](./media/image15.png){width="5.242357830271216in"
-height="4.882225503062117in"}
+![](./media/image15.png)
 
 **Sampling process in the music_reactive preset function**
 
@@ -192,9 +179,7 @@ in the vReal array.
 After, I sort the real values into 8 specifics bands, from bandValues \[
 0 \] to \[ 7 \], 0 being lowest frequencies, 7 the highest
 
-![](./media/image16.jpeg){width="1.8895833333333334in"
-height="2.9145833333333333in"}![](./media/image17.png){width="6.5in"
-height="4.9847222222222225in"}
+![](./media/image16.jpeg)![](./media/image17.png)
 
 To get the intervals values of each band, I calculated from octaves
 minimum and maximum frequencies linked to the limit of 512/2 = 256
@@ -202,8 +187,7 @@ samples (Shannon Law) used in my project:
 
 **Main Thread loop**
 
-![](./media/image18.png){width="6.5in"
-height="6.270138888888889in"}Listen to the current preset name and
+![](./media/image18.png)Listen to the current preset name and
 execute the related function as partially showed above, if no preset is
 being executed the currentPreset value is "none", and therefore no
 function is opened, until the user make a change from the mobile
@@ -218,7 +202,7 @@ The class myMQTTBroker is used to perform every MQTT commands, by
 default we are subscribed to every topics, and with the onData function
 I can process the received data as follows:
 
-![](./media/image19.png){width="6.5in" height="0.8881944444444444in"}
+![](./media/image19.png)
 
 **For example:**
 
@@ -230,7 +214,7 @@ can be **rainbow, music_reactive, confetti, sinelon...**
 The function **FastLED.show();** is used to specify a change in the led
 configuration, so we notify it to show this change
 
-![](./media/image20.png){width="6.5in" height="4.3493055555555555in"}
+![](./media/image20.png)
 
 **Function to initialize the Wi-Fi connection (this function is runned
 during the setup part)**
@@ -238,15 +222,15 @@ during the setup part)**
 The callback allow us to see from a serial monitor the status of the
 connection
 
-![](./media/image21.png){width="6.5in" height="3.634027777777778in"}
+![](./media/image21.png)
 
 **Function to setup the LED strip, add the main thread loop to our
 scheduler, and create a LedController for each LED and add its thread to
 the scheduler.**
 
-![](./media/image22.png){width="6.5in" height="1.4416666666666667in"}
+![](./media/image22.png)
 
-![](./media/image23.png){width="6.5in" height="2.097916666666667in"}
+![](./media/image23.png)
 
 Above the setup and loop functions, with the comments to explain each
 line. As you can see the loop function only contains the execution of
@@ -258,9 +242,7 @@ scheduler itself.
 13 different classes with one main service running the MQTT client in
 background
 
-![](./media/image24.png){width="2.047222222222222in"
-height="3.703472222222222in"}![](./media/image25.png){width="3.890173884514436in"
-height="3.6347222222222224in"}
+![](./media/image24.png)![](./media/image25.png)
 
 I used the Flutter Framework to program my Android application combined
 with some JAVA/Kotlin, which allows me to make the application
@@ -271,22 +253,17 @@ cross-platform (Android, iOS, Chrome\...)
 Here are some examples of the result, for more details go to the YouTube
 video of the project: <https://www.youtube.com/watch?v=ddZAKp0ckGY>
 
-![](./media/image26.gif){width="2.928472222222222in"
-height="1.4638888888888888in"}
+![](./media/image26.gif)
 
-![](./media/image27.gif){width="2.8090277777777777in"
-height="1.4972222222222222in"}
+![](./media/image27.gif)
 
 Simple Color Blinking Confetti Preset (Random change of led)
 
-![](./media/image28.gif){width="3.0034722222222223in"
-height="1.5020833333333334in"}![](./media/image29.gif){width="2.9854166666666666in"
-height="1.5069444444444444in"}
+![](./media/image28.gif)![](./media/image29.gif)
 
 Juggle Preset Sinelon Preset
 
-![](./media/image30.gif){width="1.8430555555555554in"
-height="3.295138888888889in"}
+![](./media/image30.gif)
 
 **IOT Relation**
 
